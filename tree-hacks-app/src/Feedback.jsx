@@ -11,7 +11,8 @@ function Feedback({
   const [isLoading, setIsLoading] = useState(false);
 
   function handleClick() {
-    const askPrompt = `Next, explain the differences between this statement: ${feedbackPrompt} and the definition of an integral.`;
+    console.log(feedbackPrompt);
+    const askPrompt = `Explain why the following input is right or wrong: ${feedbackPrompt} according to the definition of an integral. Check if the provided input explained fully, if not, tell me what's missing.`;
 
     setIsLoading(true);
     helperAPICaller(askPrompt, setFeedbackResponse, setIsLoading);
@@ -27,8 +28,9 @@ function Feedback({
       <button
         className={!feedbackResponse ? "button" : "button disabled"}
         onClick={handleClick}
+        disabled={feedbackResponse}
       >
-        Ask for a feedback
+        Explain the rating
       </button>
     </div>
   );

@@ -17,9 +17,9 @@ const helperAPICaller = (filteredPrompt, stateUpdate, setIsLoading) => {
 
 function App() {
   const [prompt, setPrompt] = useState("");
+  const [feedbackPrompt, setFeedbackPrompt] = useState("");
   const [response, setResponse] = useState("");
   const [feedbackResponse, setFeedbackResponse] = useState("");
-  const [feedbackPrompt, setFeedbackPrompt] = useState("");
   const [suggestResponse, setSuggestResponse] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -27,13 +27,14 @@ function App() {
     e.preventDefault();
     setIsLoading(true);
 
-    console.log(isLoading);
+    const askPrompt = `
+   I want you to rate the correctness of a statement on a scale of 1 to 10 relevant and accurate to a given prompt. Take time in determining your answer to make sure that it is accurate. When you output the scale rating, give me only the single numerical value. I do not want you to output any explanation for your rating. Here is the prompt: “Explain what it means to take an integral”. Here is the statement for which you are to measure its correctness in answering the prompt using a single numerical value: “${prompt}”.
+    `;
 
-    const askPrompt = `Rate how similar these statements are: ${prompt} with this: a function of which a given function is the derivative, i.e. which yields that function when differentiated, and which may express the area under the curve of a graph of the function. Make sure to rate on a scale of 1 to 10. I only want a numerical rating. `;
     helperAPICaller(askPrompt, setResponse, setIsLoading);
 
     setFeedbackPrompt(prompt);
-    setPrompt("");
+    // setPrompt("");
   }
 
   return (
@@ -55,7 +56,9 @@ function App() {
         {isLoading ? (
           <LoadingSpinner />
         ) : (
-          <p>{response ? `The rating is: ${response}` : ""}</p>
+          <>
+            <p>{response ? `The rating is: ${response}` : ""}</p>
+          </>
         )}
         <button
           className={`${!response ? "button" : "button disabled"}`}

@@ -11,7 +11,7 @@ function Suggestions({
   const [isLoading, setIsLoading] = useState(false);
 
   function handleConceptsClick() {
-    const askPrompt = `Suggest a list of 5 theoretical concepts that are covered before the definition of integral that would help me prepare understand what an integral is based on my initial response which was this ${feedbackPrompt}. Output this list as an array.`;
+    const askPrompt = `Act as a very well spoken individual who can explain complicated concepts very well. Now, give me specific definition of an integral with its use cases so that a 7 year-old can understand.`;
 
     setIsLoading(true);
     helperAPICaller(askPrompt, setSuggestResponse, setIsLoading);
@@ -23,24 +23,13 @@ function Suggestions({
         feedbackResponse ? "Content-box list" : " button dissapear"
       }`}
     >
-      {isLoading ? (
-        <LoadingSpinner />
-      ) : (
-        <ul className="Content-list">
-          {suggestResponse
-            ? suggestResponse.map((el, index) => (
-                <li key={index * 12}>
-                  {index + 1}. {el}
-                </li>
-              ))
-            : ""}
-        </ul>
-      )}
+      {isLoading ? <LoadingSpinner /> : <p>{suggestResponse}</p>}
       <button
         className={!suggestResponse ? "button" : "button disabled"}
         onClick={handleConceptsClick}
+        disabled={suggestResponse}
       >
-        Suggest what concepts to review
+        Explain the concept
       </button>
     </div>
   );

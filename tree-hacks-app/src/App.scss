@@ -19,6 +19,12 @@
   flex-direction: column;
   align-items: center;
 
+  .statement {
+    font-weight: 600;
+    font-size: 1.6rem;
+    text-align: center;
+  }
+
   &-label {
     font-size: 2.2rem;
     font-weight: 600;
